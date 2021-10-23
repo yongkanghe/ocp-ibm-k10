@@ -39,7 +39,7 @@ vim setenv.sh
 1. Remove OpenShift Cluster Cluster
 2. Remove all the relevant disks
 3. Remove all the relevant snapshots
-4. Remove the bucket
+4. Remove the objects from the bucket
 
 # Cick my picture to watch the how-to video. (TO BE RECORDED)
 [![IMAGE ALT TEXT HERE](https://media-exp1.licdn.com/dms/image/C5622AQFAVpxHMBu7lw/feedshare-shrink_2048_1536/0/1630923993310?e=1637193600&v=beta&t=1Zq_4N_9mj4EOZdtpKb5HeXl_K7svyMK3_ADMxHbqzM)](https://www.youtube.com/watch?v=6vDEk_9cNaI)
