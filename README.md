@@ -28,7 +28,7 @@ vim setenv.sh
 1. Create an OCP Cluster from CLI
 2. Install Kasten K10
 3. Deploy a Postgres database
-4. Create an IBM COB location profile
+4. Create an IBM COS location profile
 5. Create a backup policy
 6. Run an on-demand backup job
 
@@ -43,6 +43,9 @@ vim setenv.sh
 
 # Cick my picture to watch the how-to video.
 [![IMAGE ALT TEXT HERE](https://media-exp1.licdn.com/dms/image/C5622AQFAVpxHMBu7lw/feedshare-shrink_2048_1536/0/1630923993310?e=1637193600&v=beta&t=1Zq_4N_9mj4EOZdtpKb5HeXl_K7svyMK3_ADMxHbqzM)](https://www.youtube.com/watch?v=6vDEk_9cNaI)
+
+# Want to build an OCP cluster from the web console, here's the guide
+http://createocp.yongkang.cloud 
 
 # For more details about OCP Backup and Restore
 https://blog.kasten.io/kubernetes-backup-with-openshift-container-storage
