@@ -6,6 +6,9 @@ echo $MY_PREFIX-$MY_BUCKET > ibmbucket
 export AWS_ACCESS_KEY_ID=$(cat ibmaccess | head -1)
 export AWS_SECRET_ACCESS_KEY=$(cat ibmaccess | tail -1)
 
+echo '-------Retrieving OpenShift Cluster kubeconfig'
+ibmcloud oc cluster config -c $MY_PREFIX-$MY_CLUSTER --admin
+
 echo '-------Install K10'
 kubectl create ns kasten-io
 helm repo add kasten https://charts.kasten.io/
