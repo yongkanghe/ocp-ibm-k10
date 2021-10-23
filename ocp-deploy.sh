@@ -6,7 +6,7 @@ my_cos_instance_id=$(ibmcloud resource service-instance yhe-cos4yong1 --output j
 #ibmcloud login --apikey @ibmapi.key
 ibmcloud target -g $MY_PREFIX-$MY_RESOURCE_GROUP
 ibmcloud oc cluster create vpc-gen2 \
-  --name $MY_PREFIX-$MY_CLUSTER --version $MY_OCP_VERSION_openshift \
+  --name $MY_PREFIX-$MY_CLUSTER --version $MY_OCP_VERSION\_openshift \
   --zone $MY_ZONE --vpc-id $(cat my_vpc_id) \
   --subnet-id $(cat my_subnet_id) \
   --cos-instance $my_cos_instance_id \
