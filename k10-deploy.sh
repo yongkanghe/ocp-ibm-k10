@@ -3,7 +3,7 @@ starttime=$(date +%s)
 . setenv.sh
 MY_PREFIX=$(echo $(whoami) | sed -e 's/\_//g' | sed -e 's/\.//g' | awk '{print tolower($0)}')
 
-#ibmcloud oc cluster config -c $MY_CLUSTER --admin
+#ibmcloud oc cluster config -c $MY_PREFIX-$MY_CLUSTER --admin
 
 echo '-------Install K10'
 kubectl create ns kasten-io
