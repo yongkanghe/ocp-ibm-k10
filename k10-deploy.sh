@@ -3,16 +3,16 @@ starttime=$(date +%s)
 . setenv.sh
 MY_PREFIX=$(echo $(whoami) | sed -e 's/\_//g' | sed -e 's/\.//g' | awk '{print tolower($0)}')
 echo $MY_PREFIX-$MY_BUCKET > ibmbucket
-export AWS_ACCESS_KEY_ID=$(cat ibmaccess | head -1)
-export AWS_SECRET_ACCESS_KEY=$(cat ibmaccess | tail -1)
+export AWS_ACCESS_KEY_ID=$(cat ibmaccess | head -1 | sed -e 's/\"//g') 
+export AWS_SECRET_ACCESS_KEY=$(cat ibmaccess | tail -1 | sed -e 's/\"//g')
 
 echo '-------Retrieving OpenShift Cluster kubeconfig'
 ibmcloud oc cluster config -c $MY_PREFIX-$MY_CLUSTER --admin
 
 echo '-------Install K10'
 kubectl create ns kasten-io
-helm repo add kasten https://charts.kasten.io/
-helm install k10 kasten/k10 --namespace=kasten-io \
+./helm repo add kasten https://charts.kasten.io/
+./helm install k10 kasten/k10 --namespace=kasten-io \
     --set global.persistence.metering.size=1Gi \
     --set prometheus.server.persistentVolume.size=1Gi \
     --set global.persistence.catalog.size=1Gi \
@@ -31,8 +31,8 @@ oc annotate volumesnapshotclass ocs-storagecluster-rbdplugin-snapclass k10.kaste
 
 echo '-------Deploying a PostgreSQL database'
 kubectl create namespace postgresql
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install --namespace postgresql postgres bitnami/postgresql \
+./helm repo add bitnami https://charts.bitnami.com/bitnami
+./helm install --namespace postgresql postgres bitnami/postgresql \
   --set persistence.size=1Gi \
   --set persistence.storageClass=ocs-storagecluster-ceph-rbd \
   --set volumePermissions.securityContext.runAsUser="auto",securityContext.enabled=false,containerSecurityContext.enabled=false,shmVolume.chmod.enabled=false
@@ -86,6 +86,7 @@ spec:
       name: $(cat ibmbucket)
       objectStoreType: S3
       region: $MY_REGION
+      endpoint: s3.$MY_REGION.cloud-object-storage.appdomain.cloud
 EOF
 
 echo '------Create backup policies'
