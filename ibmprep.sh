@@ -20,6 +20,7 @@ ibmcloud is subnet-update $MY_PREFIX-$MY_SUBNET --pgw $(ibmcloud is public-gatew
 
 echo "-------Create a Cloud Object Storage instance"
 ibmcloud resource service-instance-create $MY_PREFIX-$MY_OBJECT_STORAGE cloud-object-storage standard global
+ibmcloud resource service-instance $MY_PREFIX-$MY_OBJECT_STORAGE --output json | jq '.[].id' | sed -e 's/\"//g' > my_cos_instance_id
 
 echo "-------Create an Cloud Object Storage Service Key"
 ibmcloud resource service-key-create $MY_PREFIX-$MY_SERVICE_KEY --instance-name $MY_PREFIX-$MY_OBJECT_STORAGE --parameters '{"HMAC":true}'
