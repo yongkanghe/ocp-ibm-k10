@@ -4,7 +4,7 @@ It is challenging to create an OpenShift cluster from IBM Cloud if you are not f
 
 ![image](https://blog.kasten.io/hs-fs/hubfs/Partner%20Images/Red%20Hat/kasten+openshift-social.png?width=500&name=kasten+openshift-social.png)
 
-This script based automation allows you to build a ready-to-use Kasten K10 demo environment running on OpenShift Container Platform on IBM Cloud in about 40 minutes. To demonsrate OpenShift Container Storage feature, the OCP cluster will have 4 worker nodes and be built in a new vpc using a new subnet, gateway. This is bash shell based scripts which has been tested on Cloud Shell in the Sydney region. 
+This script based automation allows you to build a ready-to-use Kasten K10 demo environment running on OpenShift Container Platform on IBM Cloud in about 40 minutes. In order to demonsrate OpenShift Container Storage features, the OCP cluster will have 4 worker nodes and be built in a new vpc using a new subnet, gateway. This is bash shell based scripts which has been tested on Cloud Shell in the Sydney region. 
 
 # Here're the prerequisities. 
 1. Go to open IBM Cloud Shell
