@@ -5,8 +5,6 @@ MY_PREFIX=$(echo $(whoami) | sed -e 's/\_//g' | sed -e 's/\.//g' | awk '{print t
 export AWS_ACCESS_KEY_ID=$(cat ibmaccess | head -1)
 export AWS_SECRET_ACCESS_KEY=$(cat ibmaccess | tail -1)
 
-#ibmcloud oc cluster config -c $MY_PREFIX-$MY_CLUSTER --admin
-
 echo '-------Install K10'
 kubectl create ns kasten-io
 helm repo add kasten https://charts.kasten.io/
@@ -24,20 +22,8 @@ helm install k10 kasten/k10 --namespace=kasten-io \
 echo '-------Set the default ns to k10'
 kubectl config set-context --current --namespace kasten-io
 
-#Annotate the volumesnapshotclass
+echo '-------Annotate the volumesnapshotclass'
 oc annotate volumesnapshotclass ocs-storagecluster-rbdplugin-snapclass k10.kasten.io/is-snapshot-class=true
-
-# echo '-------Creating a ceph rbd vsc'
-# cat <<EOF | kubectl apply -f -
-# apiVersion: snapshot.storage.k8s.io/v1
-# kind: VolumeSnapshotClass
-# metadata:
-#   annotations:
-#     k10.kasten.io/is-snapshot-class: "true"
-#   name: ceph-rbd-vsc
-# driver: openshift-storage.rbd.csi.ceph.com
-# deletionPolicy: Delete
-# EOF
 
 echo '-------Deploying a PostgreSQL database'
 kubectl create namespace postgresql
@@ -53,7 +39,7 @@ echo "" | awk '{print $1}' > ocp-token
 echo My Cluster ID is $clusterid >> ocp-token
 
 echo '-------Creating a IBM COS profile secret'
-kubectl create secret generic k10-s3-secret \
+kubectl create secret generic k10-ibm-s3-secret \
       --namespace kasten-io \
       --type secrets.kanister.io/aws \
       --from-literal=aws_access_key_id=$AWS_ACCESS_KEY_ID \
@@ -88,7 +74,7 @@ spec:
       secret:
         apiVersion: v1
         kind: Secret
-        name: k10-s3-secret
+        name: k10-ibm-s3-secret
         namespace: kasten-io
     type: ObjectStore
     objectStore:
