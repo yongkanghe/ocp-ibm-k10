@@ -2,14 +2,12 @@ echo '-------Creating an OCP Cluster'
 starttime=$(date +%s)
 . setenv.sh
 MY_PREFIX=$(echo $(whoami) | sed -e 's/\_//g' | sed -e 's/\.//g' | awk '{print tolower($0)}')
-my_cos_instance_id=$(ibmcloud resource service-instance yhe-cos4yong1 --output json | jq '.[].id') 
-#ibmcloud login --apikey @ibmapi.key
 ibmcloud target -g $MY_PREFIX-$MY_RESOURCE_GROUP
 ibmcloud oc cluster create vpc-gen2 \
   --name $MY_PREFIX-$MY_CLUSTER --version $MY_OCP_VERSION\_openshift \
   --zone $MY_ZONE --vpc-id $(cat my_vpc_id) \
   --subnet-id $(cat my_subnet_id) \
-  --cos-instance $my_cos_instance_id \
+  --cos-instance $(my_cos_instance_id) \
   --flavor $MY_WORKER_FLAVOR \
   --workers 4 #bx2.4x16, cx2.8x16
 
