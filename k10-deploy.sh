@@ -61,6 +61,7 @@ echo '-------Waiting for K10 services are up running in about 1 or 2 mins'
 kubectl wait --for=condition=ready --timeout=600s -n kasten-io pod -l component=catalog
 
 echo '-------Creating a IBM COS profile'
+cat <<EOF | kubectl apply -f -
 apiVersion: config.kio.kasten.io/v1alpha1
 kind: Profile
 metadata:
