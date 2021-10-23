@@ -9,10 +9,10 @@ echo "-------Create a seprate VPC, Subnet, Public Gateway"
 ibmcloud is vpc-create $MY_PREFIX-$MY_VPC
 ibmcloud oc vpcs --provider vpc-gen2 | grep $MY_PREFIX-$MY_VPC | awk '{print $2}' > my_vpc_id
 ibmcloud is vpc-address-prefixes $(cat my_vpc_id) | grep $MY_ZONE | awk '{print $3}' | sed -e 's/\/.*/\/24/g' > my_cidr_block
-ibmcloud is subnet-create $MY_PREFIX-$MY_SUBNET $(cat my_vpc_id) $MY_REGION --ipv4-cidr-block $(cat my_cidr_block)
+ibmcloud is subnet-create $MY_PREFIX-$MY_SUBNET $(cat my_vpc_id) $MY_ZONE --ipv4-cidr-block $(cat my_cidr_block)
 ibmcloud is subnets | grep $MY_PREFIX-$MY_SUBNET | awk '{print $1}' > my_subnet_id
 ibmcloud is public-gateway-create $MY_PREFIX-$MY_GATEWAY $(cat my_vpc_id) $MY_ZONE
-ibmcloud is subnet-update $MY_PREFIX-$MY_SUBNET --public-gateway-id $(ibmcloud is public-gateways | grep $MY_PREFIX-$MY_GATEWAY | awk '{print $1}')
+ibmcloud is subnet-update $MY_PREFIX-$MY_SUBNET --pgw $(ibmcloud is public-gateways | grep $MY_PREFIX-$MY_GATEWAY | awk '{print $1}')
 
 echo "-------Create an Cloud Object Storage instance"
 ibmcloud resource service-instance-create $MY_PREFIX-$MY_OBJECT_STORAGE cloud-object-storage standard global
