@@ -15,9 +15,9 @@ ibmcloud oc cluster rm --cluster $MY_PREFIX-$MY_CLUSTER --force-delete-storage -
 # ibmcloud resource group-delete $MY_PREFIX-$MY_RESOURCE_GROUP -f
 
 echo '-------Deleting the bucket'
-ibmcloud cos objects --bucket $MY_PREFIX-$MY_BUCKET --region $MY_REGION --output json| grep Key | awk '{print $2}' | sed 's/\"//g' | sed 's/\,//g' > k10objects
-for i in `cat k10objects`;do echo $i;ibmcloud cos object-delete --bucket $MY_PREFIX-$MY_BUCKET --key $i --region $MY_REGION --force;done 
-#ibmcloud cos bucket-delete --bucket $MY_PREFIX-$MY_BUCKET --region $MY_REGION --force
+ibmcloud cos objects --bucket $(cat my_ibm_bucket) --region $MY_REGION --output json| grep Key | awk '{print $2}' | sed 's/\"//g' | sed 's/\,//g' > k10objects
+for i in `cat k10objects`;do echo $i;ibmcloud cos object-delete --bucket $(cat my_ibm_bucket) --key $i --region $MY_REGION --force;done 
+ibmcloud cos bucket-delete --bucket $(cat my_ibm_bucket) --region $MY_REGION --force
 
 echo "" | awk '{print $1}'
 endtime=$(date +%s)
