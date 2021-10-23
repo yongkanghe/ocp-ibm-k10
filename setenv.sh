@@ -5,6 +5,7 @@ export MY_VPC=vpc4yong1
 export MY_SUBNET=subnet4yong1
 export MY_GATEWAY=gateway4yong1
 export MY_OBJECT_STORAGE=cos4yong1
+export MY_SERVICE_KEY=svckey4yong1
 export MY_WORKER_FLAVOR=bx2.8x32 #Customize your favorite worker flavor
 export MY_OCP_VERSION=4.8        #Customize your favorite
 export MY_REGION=au-syd          #Customize your favorite region
