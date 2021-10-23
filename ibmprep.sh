@@ -20,7 +20,7 @@ ibmcloud is subnet-update $MY_PREFIX-$MY_SUBNET --pgw $(ibmcloud is public-gatew
 
 echo "-------Create a Cloud Object Storage instance"
 ibmcloud resource service-instance-create $MY_PREFIX-$MY_OBJECT_STORAGE cloud-object-storage standard global
-ibmcloud resource service-instance $MY_PREFIX-$MY_OBJECT_STORAGE --output json | jq '.[].id' | sed -e 's/\"//g' > my_cos_instance_id
+ibmcloud resource service-instance $MY_PREFIX-$MY_OBJECT_STORAGE --output json | jq '.[].id' | sed -e 's/\"//g' | head -1 > my_cos_instance_id
 
 echo "-------Create an Cloud Object Storage Service Key"
 ibmcloud resource service-key-create $MY_PREFIX-$MY_SERVICE_KEY --instance-name $MY_PREFIX-$MY_OBJECT_STORAGE --parameters '{"HMAC":true}'
@@ -28,7 +28,7 @@ ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[]
 ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[].credentials.cos_hmac_keys.secret_access_key' >> ibmaccess
 
 echo "-------Create an Object Storage Bucket"
-ibmcloud cos bucket-create --bucket $MY_PREFIX-$MY_BUCKET --ibm-service-instance-id $(cat my_cos_instance_id | head -1) --class standard --region $MY_REGION
+ibmcloud cos bucket-create --bucket $MY_PREFIX-$MY_BUCKET --ibm-service-instance-id $(cat my_cos_instance_id) --class standard --region $MY_REGION
 
 echo "-------Initialize Helm Chart Repository"
 helm init --stable-repo-url https://charts.helm.sh/stable
