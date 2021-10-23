@@ -5,8 +5,8 @@ MY_PREFIX=$(echo $(whoami) | sed -e 's/\_//g' | sed -e 's/\.//g' | awk '{print t
 export AWS_ACCESS_KEY_ID=$(cat ibmaccess | head -1 | sed -e 's/\"//g') 
 export AWS_SECRET_ACCESS_KEY=$(cat ibmaccess | tail -1 | sed -e 's/\"//g')
 
-echo '-------Retrieving OpenShift Cluster kubeconfig'
-ibmcloud oc cluster config -c $MY_PREFIX-$MY_CLUSTER --admin
+# echo '-------Retrieving OpenShift Cluster kubeconfig'
+# ibmcloud oc cluster config -c $MY_PREFIX-$MY_CLUSTER --admin
 
 echo '-------Install K10'
 kubectl create ns kasten-io
