@@ -27,6 +27,9 @@ ibmcloud resource service-key-create $MY_PREFIX-$MY_SERVICE_KEY --instance-name 
 ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[].credentials.cos_hmac_keys.access_key_id' > ibmaccess
 ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[].credentials.cos_hmac_keys.secret_access_key' >> ibmaccess
 
+echo "-------Initialize Helm Chart Repository"
+helm init --stable-repo-url https://charts.helm.sh/stable
+
 echo "" | awk '{print $1}'
 echo "-------You are ready to deploy now!"
 echo "" | awk '{print $1}'
