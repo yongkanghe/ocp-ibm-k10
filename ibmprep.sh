@@ -18,7 +18,7 @@ echo "-------Create a new Public Gateway and associate to the Subnet"
 ibmcloud is public-gateway-create $MY_PREFIX-$MY_GATEWAY $(cat my_vpc_id) $MY_ZONE
 ibmcloud is subnet-update $MY_PREFIX-$MY_SUBNET --pgw $(ibmcloud is public-gateways | grep $MY_PREFIX-$MY_GATEWAY | awk '{print $1}')
 
-echo "-------Create an Cloud Object Storage instance"
+echo "-------Create a Cloud Object Storage instance"
 ibmcloud resource service-instance-create $MY_PREFIX-$MY_OBJECT_STORAGE cloud-object-storage standard global
 
 echo "-------Create an Cloud Object Storage Service Key"
