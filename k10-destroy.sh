@@ -8,9 +8,8 @@ helm uninstall k10 -n kasten-io
 kubectl delete ns postgresql
 kubectl delete ns kasten-io
 
-# echo '-------Deleting the bucket'
-# myproject=$(gcloud config get-value core/project)
-# gsutil -m rm -r gs://$MY_PREFIX-$MY_BUCKET
+echo '-------Deleting the bucket'
+ibmcloud cos bucket-delete --bucket $MY_PREFIX-$MY_BUCKET --region $MY_REGION --force
 
 # echo '-------Deleting kubeconfig for this cluster'
 # kubectl config delete-context $(kubectl config get-contexts | grep $MY_PREFIX-$MY_CLUSTER | awk '{print $2}')
