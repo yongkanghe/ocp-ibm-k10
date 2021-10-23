@@ -44,8 +44,8 @@ vim setenv.sh
 # Cick my picture to watch the how-to video.
 [![IMAGE ALT TEXT HERE](https://media-exp1.licdn.com/dms/image/C5622AQFAVpxHMBu7lw/feedshare-shrink_2048_1536/0/1630923993310?e=1637193600&v=beta&t=1Zq_4N_9mj4EOZdtpKb5HeXl_K7svyMK3_ADMxHbqzM)](https://www.youtube.com/watch?v=6vDEk_9cNaI)
 
-# Want to build an OCP cluster from the web console, here's the guide
-http://createocp.yongkang.cloud 
+# Learn how to build an OCP cluster from the web console http://createocp.yongkang.cloud 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/FDvY9PSxgAQ/0.jpg)](https://www.youtube.com/watch?v=FDvY9PSxgAQ)
 
 # For more details about OCP Backup and Restore
 https://blog.kasten.io/kubernetes-backup-with-openshift-container-storage
