@@ -2,6 +2,8 @@
 starttime=$(date +%s)
 . setenv.sh
 MY_PREFIX=$(echo $(whoami) | sed -e 's/\_//g' | sed -e 's/\.//g' | awk '{print tolower($0)}')
+export AWS_ACCESS_KEY_ID=$(cat ibmaccess | head -1)
+export AWS_SECRET_ACCESS_KEY=$(cat ibmaccess | tail -1)
 
 #ibmcloud oc cluster config -c $MY_PREFIX-$MY_CLUSTER --admin
 
@@ -50,12 +52,12 @@ clusterid=$(kubectl get namespace default -ojsonpath="{.metadata.uid}{'\n'}")
 echo "" | awk '{print $1}' > ocp-token
 echo My Cluster ID is $clusterid >> ocp-token
 
-echo '-------Creating a GCS profile secret'
-myproject=$(gcloud config get-value core/project)
-kubectl create secret generic k10-gcs-secret \
+echo '-------Creating a IBM COS profile secret'
+kubectl create secret generic k10-s3-secret \
       --namespace kasten-io \
-      --from-literal=project-id=$myproject \
-      --from-file=service-account.json=k10-sa-key.json
+      --type secrets.kanister.io/aws \
+      --from-literal=aws_access_key_id=$AWS_ACCESS_KEY_ID \
+      --from-literal=aws_secret_access_key=$AWS_SECRET_ACCESS_KEY
 
 echo '-------Wait for 1 or 2 mins for the Web UI IP and token'
 kubectl wait --for=condition=ready --timeout=180s -n kasten-io pod -l component=jobs
@@ -72,8 +74,7 @@ echo "" | awk '{print $1}' >> ocp-token
 echo '-------Waiting for K10 services are up running in about 1 or 2 mins'
 kubectl wait --for=condition=ready --timeout=600s -n kasten-io pod -l component=catalog
 
-echo '-------Creating a GCS profile'
-cat <<EOF | kubectl apply -f -
+echo '-------Creating a IBM COS profile'
 apiVersion: config.kio.kasten.io/v1alpha1
 kind: Profile
 metadata:
@@ -83,16 +84,16 @@ spec:
   type: Location
   locationSpec:
     credential:
-      secretType: GcpServiceAccountKey
+      secretType: AwsAccessKey
       secret:
         apiVersion: v1
         kind: Secret
-        name: k10-gcs-secret
+        name: k10-s3-secret
         namespace: kasten-io
     type: ObjectStore
     objectStore:
-      name: $MY_PREFIX-$MY_BUCKET
-      objectStoreType: GCS
+      name: $(cat eks_bucketname)
+      objectStoreType: S3
       region: $MY_REGION
 EOF
 
