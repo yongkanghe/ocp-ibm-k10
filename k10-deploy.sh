@@ -2,7 +2,6 @@
 starttime=$(date +%s)
 . setenv.sh
 MY_PREFIX=$(echo $(whoami) | sed -e 's/\_//g' | sed -e 's/\.//g' | awk '{print tolower($0)}')
-echo $MY_PREFIX-$MY_BUCKET > ibmbucket
 export AWS_ACCESS_KEY_ID=$(cat ibmaccess | head -1 | sed -e 's/\"//g') 
 export AWS_SECRET_ACCESS_KEY=$(cat ibmaccess | tail -1 | sed -e 's/\"//g')
 
@@ -83,7 +82,7 @@ spec:
         namespace: kasten-io
     type: ObjectStore
     objectStore:
-      name: $(cat ibmbucket)
+      name: $(cat my_ibm_bucket)
       objectStoreType: S3
       region: $MY_REGION
       endpoint: s3.$MY_REGION.cloud-object-storage.appdomain.cloud
