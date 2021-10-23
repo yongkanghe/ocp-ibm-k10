@@ -1,4 +1,5 @@
 echo "-------Create a resource group"
+. setenv.sh
 MY_PREFIX=$(echo $(whoami) | sed -e 's/\_//g' | sed -e 's/\.//g' | awk '{print tolower($0)}')
 ibmcloud target -r $MY_REGION
 ibmcloud resource group-create $MY_PREFIX-$MY_RESOURCE_GROUP
