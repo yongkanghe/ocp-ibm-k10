@@ -31,7 +31,7 @@ echo "-------Create an Object Storage Bucket"
 ibmcloud cos bucket-create --bucket $MY_PREFIX-$MY_BUCKET --ibm-service-instance-id $(cat my_cos_instance_id) --class standard --region $MY_REGION
 
 echo "-------Initialize Helm Chart Repository"
-helm init --stable-repo-url https://charts.helm.sh/stable
+
 
 echo "" | awk '{print $1}'
 echo "-------You are ready to deploy now!"
