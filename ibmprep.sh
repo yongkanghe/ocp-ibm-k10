@@ -28,7 +28,9 @@ ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[]
 ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[].credentials.cos_hmac_keys.secret_access_key' >> ibmaccess
 
 echo "-------Create an Object Storage Bucket"
-ibmcloud cos bucket-create --bucket $MY_PREFIX-$MY_BUCKET --ibm-service-instance-id $(cat my_cos_instance_id) --class standard --region $MY_REGION
+ibmcloud cos objects --bucket $MY_PREFIX-$MY_BUCKET --region $MY_REGION --output json| grep Key | awk '{print $2}' | sed 's/\"//g' | sed 's/\,//g' > k10objects
+for i in `cat k10objects`;do echo $i;ibmcloud cos object-delete --bucket $MY_PREFIX-$MY_BUCKET --key $i --region $MY_REGION --force;done 
+#ibmcloud cos bucket-create --bucket $MY_PREFIX-$MY_BUCKET --ibm-service-instance-id $(cat my_cos_instance_id) --class standard --region $MY_REGION
 
 echo "-------Initialize Helm Chart Repository"
 helm init --stable-repo-url https://charts.helm.sh/stable
