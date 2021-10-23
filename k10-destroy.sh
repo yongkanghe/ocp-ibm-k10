@@ -11,7 +11,7 @@ kubectl delete ns kasten-io
 echo '-------Deleting the bucket'
 ibmcloud cos objects --bucket $MY_PREFIX-$MY_BUCKET --region $MY_REGION --output json| grep Key | awk '{print $2}' | sed 's/\"//g' | sed 's/\,//g' > k10objects
 for i in `cat k10objects`;do echo $i;ibmcloud cos object-delete --bucket $MY_PREFIX-$MY_BUCKET --key $i --region $MY_REGION --force;done 
-ibmcloud cos bucket-delete --bucket $MY_PREFIX-$MY_BUCKET --region $MY_REGION --force
+#ibmcloud cos bucket-delete --bucket $MY_PREFIX-$MY_BUCKET --region $MY_REGION --force
 
 # echo '-------Deleting kubeconfig for this cluster'
 # kubectl config delete-context $(kubectl config get-contexts | grep $MY_PREFIX-$MY_CLUSTER | awk '{print $2}')
