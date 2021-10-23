@@ -7,7 +7,7 @@ ibmcloud oc cluster create vpc-gen2 \
   --name $MY_PREFIX-$MY_CLUSTER --version $MY_OCP_VERSION\_openshift \
   --zone $MY_ZONE --vpc-id $(cat my_vpc_id) \
   --subnet-id $(cat my_subnet_id) \
-  --cos-instance $(my_cos_instance_id) \
+  --cos-instance $(cat my_cos_instance_id) \
   --flavor $MY_WORKER_FLAVOR \
   --workers 4 #bx2.4x16, cx2.8x16
 
