@@ -1,7 +1,8 @@
 echo "-------Create a resource group"
+MY_PREFIX=$(echo $(whoami) | sed -e 's/\_//g' | sed -e 's/\.//g' | awk '{print tolower($0)}')
 ibmcloud target -r $MY_REGION
-ibmcloud resource group-create $MY_RESOURCE_GROUP
-ibmcloud target -g $MY_RESOURCE_GROUP
+ibmcloud resource group-create $MY_PREFIX-$MY_RESOURCE_GROUP
+ibmcloud target -g $MY_PREFIX-$MY_RESOURCE_GROUP
 
 echo "-------Create a seprate VPC, Subnet, Public Gateway"
 ibmcloud is vpc-create $MY_VPC
