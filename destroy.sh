@@ -14,6 +14,14 @@ ibmcloud oc cluster rm --cluster $MY_CLUSTER --force-delete-storage -f #-q
 # helm uninstall mongodb -n mongodb
 # kubectl delete ns mongodb
 
+# echo "-------Clean up the resources Subnet, Gateway, Service Key, Storage Instance and Resource Group"
+# ibmcloud is subnet-delete $MY_PREFIX-$MY_SUBNET -f
+# ibmcloud is public-gateway-delete $MY_PREFIX-$MY_GATEWAY -f
+# ibmcloud is vpc-delete $MY_PREFIX-$MY_VPC -f
+# ibmcloud resource service-key-delete $MY_PREFIX-$MY_SERVICE_KEY -g $MY_PREFIX-$MY_RESOURCE_GROUP -f
+# ibmcloud resource service-instance-delete $MY_PREFIX-$MY_OBJECT_STORAGE -g $MY_PREFIX-$MY_RESOURCE_GROUP -f
+# ibmcloud resource group-delete $MY_PREFIX-$MY_RESOURCE_GROUP -f
+
 # echo '-------Deleting the GKE Cluster (typically in less than 10 mins)'
 # MY_PREFIX=$(echo $(whoami) | sed -e 's/\_//g' | sed -e 's/\.//g' | awk '{print tolower($0)}')
 # gkeclustername=$(gcloud container clusters list --format="value(name)" --filter="$MY_PREFIX-$MY_CLUSTER")
