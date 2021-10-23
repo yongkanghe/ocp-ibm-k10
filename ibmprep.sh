@@ -28,7 +28,8 @@ ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[]
 ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[].credentials.cos_hmac_keys.secret_access_key' >> ibmaccess
 
 echo "-------Create an Object Storage Bucket"
-ibmcloud cos bucket-create --bucket $MY_PREFIX-$MY_BUCKET --ibm-service-instance-id $(cat my_cos_instance_id) --class standard --region $MY_REGION
+echo $MY_PREFIX-$MY_BUCKET-$(date +%s) > my_ibm_bucket
+ibmcloud cos bucket-create --bucket $(cat my_ibm_bucket) --ibm-service-instance-id $(cat my_cos_instance_id) --class standard --region $MY_REGION
 
 echo "-------Initialize Helm Chart Repository"
 helm init --stable-repo-url https://charts.helm.sh/stable
