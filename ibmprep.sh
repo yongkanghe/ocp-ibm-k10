@@ -59,10 +59,8 @@ then
   ibmcloud resource service-key-create $MY_PREFIX-$MY_SERVICE_KEY --instance-name $MY_PREFIX-$MY_OBJECT_STORAGE --parameters '{"HMAC":true}'
 fi
 
-if [ ! -f ibmaccess ]; then
-  ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[].credentials.cos_hmac_keys.access_key_id' > ibmaccess
-  ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[].credentials.cos_hmac_keys.secret_access_key' >> ibmaccess
-fi
+ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[].credentials.cos_hmac_keys.access_key_id' > ibmaccess
+ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[].credentials.cos_hmac_keys.secret_access_key' >> ibmaccess
 
 echo "-------Create an Object Storage Bucket if not exist"
 ibmcloud cos buckets --ibm-service-instance-id $(cat my_cos_instance_id) | grep $MY_BUCKET
