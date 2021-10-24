@@ -21,9 +21,9 @@ ibmcloud is subnet-delete $MY_PREFIX-$MY_SUBNET -f
 ibmcloud is public-gateway-delete $MY_PREFIX-$MY_GATEWAY -f
 ibmcloud is vpc-delete $MY_PREFIX-$MY_VPC -f
 ibmcloud resource service-key-delete $MY_PREFIX-$MY_SERVICE_KEY -g $MY_PREFIX-$MY_RESOURCE_GROUP -f
-ibmcloud resource service-key-delete $(ibmcloud resource service-keys -q | grep -v Name | awk '{print $1}') -g $MY_PREFIX-$MY_RESOURCE_GROUP -f
+ibmcloud resource service-key-delete $(ibmcloud resource service-keys -q | grep -v Name | grep -v found | awk '{print $1}') -g $MY_PREFIX-$MY_RESOURCE_GROUP -f
 ibmcloud resource service-instance-delete $MY_PREFIX-$MY_OBJECT_STORAGE -g $MY_PREFIX-$MY_RESOURCE_GROUP -f
-ibmcloud resource group-delete $MY_PREFIX-$MY_RESOURCE_GROUP -f
+#ibmcloud resource group-delete $MY_PREFIX-$MY_RESOURCE_GROUP -f
 
 echo "" | awk '{print $1}'
 endtime=$(date +%s)
