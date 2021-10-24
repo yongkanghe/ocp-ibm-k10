@@ -37,6 +37,7 @@ wget https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz
 tar zxf helm-v3.7.1-linux-amd64.tar.gz
 mv linux-amd64/helm .
 rm helm-v3.7.1-linux-amd64.tar.gz 
+rm -rf linux-amd64 
 export PATH=~/ocp-ibm-k10:$PATH
 
 echo "" | awk '{print $1}'
