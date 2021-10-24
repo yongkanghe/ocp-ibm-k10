@@ -17,13 +17,13 @@ for i in `cat k10objects`;do echo $i;ibmcloud cos object-delete --bucket $(cat m
 ibmcloud cos bucket-delete --bucket $(cat my_ibm_bucket) --region $MY_REGION --force
 
 echo '-------Waiting for removing the cluster'
-sleep 180
+sleep 150
 
 echo '-------Still waiting for removing the cluster'
-sleep 180
+sleep 150
 
 echo '-------Almost complete to delete the cluster'
-sleep 180
+sleep 150
 
 echo "-------Clean up the resources Subnet, Gateway, Service Key, Storage Instance and Resource Group"
 ibmcloud is subnet-delete $MY_PREFIX-$MY_SUBNET -f
