@@ -42,12 +42,15 @@ echo $MY_PREFIX-$MY_BUCKET-$(date +%s) > my_ibm_bucket
 ibmcloud cos bucket-create --bucket $(cat my_ibm_bucket) --ibm-service-instance-id $(cat my_cos_instance_id) --class standard --region $MY_REGION
 
 echo "-------Upgrade Helm to version 3"
-helm init --stable-repo-url https://charts.helm.sh/stable
-wget https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz
-tar zxf helm-v3.7.1-linux-amd64.tar.gz
-mv linux-amd64/helm .
-rm helm-v3.7.1-linux-amd64.tar.gz 
-rm -rf linux-amd64 
+if [ ! -f helm ]; then
+  #helm init --stable-repo-url https://charts.helm.sh/stable
+  wget https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz
+  tar zxf helm-v3.7.1-linux-amd64.tar.gz
+  mv linux-amd64/helm .
+  rm helm-v3.7.1-linux-amd64.tar.gz 
+  rm -rf linux-amd64 
+fi
+
 export PATH=~/ocp-ibm-k10:$PATH
 
 echo "" | awk '{print $1}'
