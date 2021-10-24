@@ -19,6 +19,10 @@ then
   ibmcloud oc vpcs --provider vpc-gen2 | grep $MY_PREFIX-$MY_VPC | awk '{print $2}' > my_vpc_id
 fi
 
+if [ ! -f my_vpc_id ]; then
+  ibmcloud oc vpcs --provider vpc-gen2 | grep $MY_PREFIX-$MY_VPC | awk '{print $2}' > my_vpc_id
+fi
+
 echo "-------Create a new Subnet if not exist"
 ibmcloud is subnets | grep $MY_PREFIX-$MY_SUBNET
 if [ `echo $?` -eq 1 ]
@@ -26,6 +30,10 @@ then
   ibmcloud is vpc-address-prefixes $(cat my_vpc_id) | grep $MY_ZONE | awk '{print $3}' | sed -e 's/\/.*/\/24/g' > my_cidr_block
   ibmcloud is subnet-create $MY_PREFIX-$MY_SUBNET $(cat my_vpc_id) $MY_ZONE --ipv4-cidr-block $(cat my_cidr_block)
   ibmcloud is subnets | grep $MY_PREFIX-$MY_SUBNET | awk '{print $1}' > my_subnet_id
+fi
+
+if [ ! -f my_subnet_id ]; then
+ibmcloud is subnets | grep $MY_PREFIX-$MY_SUBNET | awk '{print $1}' > my_subnet_id
 fi
 
 echo "-------Create a new Public Gateway and associate to the Subnet if not exist"
