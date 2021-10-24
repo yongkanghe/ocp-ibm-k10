@@ -27,7 +27,7 @@ vim setenv.sh
 ````
 1. Create an OCP Cluster from CLI
 2. Install Kasten K10
-3. Deploy a Postgres database
+3. Deploy a MongoDB database
 4. Create an IBM COS location profile
 5. Create a backup policy
 6. Run an on-demand backup job
