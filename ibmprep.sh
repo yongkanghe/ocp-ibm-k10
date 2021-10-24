@@ -33,7 +33,7 @@ echo "-------Create an Object Storage Bucket"
 echo $MY_PREFIX-$MY_BUCKET-$(date +%s) > my_ibm_bucket
 ibmcloud cos bucket-create --bucket $(cat my_ibm_bucket) --ibm-service-instance-id $(cat my_cos_instance_id) --class standard --region $MY_REGION
 
-echo "-------Initialize Helm Chart Repository"
+echo "-------Upgrade Helm to version 3"
 helm init --stable-repo-url https://charts.helm.sh/stable
 wget https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz
 tar zxf helm-v3.7.1-linux-amd64.tar.gz
