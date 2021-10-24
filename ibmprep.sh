@@ -70,9 +70,7 @@ then
   ibmcloud cos bucket-create --bucket $(cat my_ibm_bucket) --ibm-service-instance-id $(cat my_cos_instance_id) --class standard --region $MY_REGION
 fi
 
-if [ ! -f ibmbucket ]; then
 ibmcloud cos buckets --ibm-service-instance-id $(cat my_cos_instance_id) | grep $MY_BUCKET | awk '{print $1}' > ibmbucket  
-fi
 
 echo "-------Upgrade Helm to version 3"
 if [ ! -f helm ]; then
