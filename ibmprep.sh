@@ -1,4 +1,5 @@
 echo "-------Create a resource group"
+starttime=$(date +%s)
 . setenv.sh
 MY_PREFIX=$(echo $(whoami) | sed -e 's/\_//g' | sed -e 's/\.//g' | awk '{print tolower($0)}')
 ibmcloud target -r $MY_REGION
@@ -10,6 +11,7 @@ ibmcloud is vpc-create $MY_PREFIX-$MY_VPC
 ibmcloud oc vpcs --provider vpc-gen2 | grep $MY_PREFIX-$MY_VPC | awk '{print $2}' > my_vpc_id
 
 echo "-------Create a new Subnet"
+sleep 3
 ibmcloud is vpc-address-prefixes $(cat my_vpc_id) | grep $MY_ZONE | awk '{print $3}' | sed -e 's/\/.*/\/24/g' > my_cidr_block
 ibmcloud is subnet-create $MY_PREFIX-$MY_SUBNET $(cat my_vpc_id) $MY_ZONE --ipv4-cidr-block $(cat my_cidr_block)
 ibmcloud is subnets | grep $MY_PREFIX-$MY_SUBNET | awk '{print $1}' > my_subnet_id
@@ -44,4 +46,10 @@ echo "" | awk '{print $1}'
 echo "-------You are ready to deploy now!"
 echo "" | awk '{print $1}'
 
-
+endtime=$(date +%s)
+duration=$(( $endtime - $starttime ))
+echo "-------Total time for the prep tasks is $(($duration / 60)) minutes $(($duration % 60)) seconds."
+echo "" | awk '{print $1}'
+echo "-------Created by Yongkang"
+echo "-------Email me if any suggestions or issues he@yongkang.cloud"
+echo "" | awk '{print $1}'
