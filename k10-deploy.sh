@@ -28,13 +28,16 @@ kubectl config set-context --current --namespace kasten-io
 echo '-------Annotate the volumesnapshotclass'
 oc annotate volumesnapshotclass ocs-storagecluster-rbdplugin-snapclass k10.kasten.io/is-snapshot-class=true
 
-echo '-------Deploying a PostgreSQL database'
-kubectl create namespace postgresql
+echo '-------Deploying a MongoDB database'
+kubectl create namespace mongodb
 ./helm repo add bitnami https://charts.bitnami.com/bitnami
-./helm install --namespace postgresql postgres bitnami/postgresql \
-  --set persistence.size=1Gi \
+./helm install mongodb bitnami/mongodb -n mongodb \
   --set persistence.storageClass=ocs-storagecluster-ceph-rbd \
-  --set volumePermissions.securityContext.runAsUser="auto",securityContext.enabled=false,containerSecurityContext.enabled=false,shmVolume.chmod.enabled=false
+  --set persistence.size=1Gi \
+  --set volumePermissions.securityContext.runAsUser="auto" \
+  --set podSecurityContext.fsGroup="auto" \
+  --set podSecurityContext.enabled=false \
+  --set containerSecurityContext.enabled=false 
 
 echo '-------Output the Cluster ID'
 clusterid=$(kubectl get namespace default -ojsonpath="{.metadata.uid}{'\n'}")
@@ -93,7 +96,7 @@ cat <<EOF | kubectl apply -f -
 apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
-  name: postgresql-backup
+  name: mongodb-backup
   namespace: kasten-io
 spec:
   comment: ""
@@ -133,7 +136,7 @@ spec:
       - key: k10.kasten.io/appNamespace
         operator: In
         values:
-          - postgresql
+          - mongodb
 EOF
 
 sleep 7
@@ -149,7 +152,7 @@ metadata:
 spec:
   subject:
     kind: Policy
-    name: postgresql-backup
+    name: mongodb-backup
     namespace: kasten-io
 EOF
 
