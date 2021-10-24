@@ -21,13 +21,21 @@ ibmcloud is public-gateway-create $MY_PREFIX-$MY_GATEWAY $(cat my_vpc_id) $MY_ZO
 ibmcloud is subnet-update $MY_PREFIX-$MY_SUBNET --pgw $(ibmcloud is public-gateways | grep $MY_PREFIX-$MY_GATEWAY | awk '{print $1}')
 
 echo "-------Create a Cloud Object Storage instance"
-ibmcloud resource service-instance-create $MY_PREFIX-$MY_OBJECT_STORAGE cloud-object-storage standard global
-ibmcloud resource service-instance $MY_PREFIX-$MY_OBJECT_STORAGE --output json | jq '.[].id' | sed -e 's/\"//g' | head -1 > my_cos_instance_id
+ibmcloud resource service-instances | grep $MY_PREFIX-$MY_OBJECT_STORAGE
+if [ `echo $?` -eq 1 ]
+then
+  ibmcloud resource service-instance-create $MY_PREFIX-$MY_OBJECT_STORAGE cloud-object-storage standard global
+  ibmcloud resource service-instance $MY_PREFIX-$MY_OBJECT_STORAGE --output json | jq '.[].id' | sed -e 's/\"//g' | head -1 > my_cos_instance_id
+fi
 
 echo "-------Create an Cloud Object Storage Service Key"
+ibmcloud resource service-keys | grep $MY_PREFIX-$MY_SERVICE_KEY
+if [ `echo $?` -eq 1 ]
+then
 ibmcloud resource service-key-create $MY_PREFIX-$MY_SERVICE_KEY --instance-name $MY_PREFIX-$MY_OBJECT_STORAGE --parameters '{"HMAC":true}'
 ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[].credentials.cos_hmac_keys.access_key_id' > ibmaccess
 ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[].credentials.cos_hmac_keys.secret_access_key' >> ibmaccess
+fi
 
 echo "-------Create an Object Storage Bucket"
 echo $MY_PREFIX-$MY_BUCKET-$(date +%s) > my_ibm_bucket
