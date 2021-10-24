@@ -19,7 +19,7 @@ then
   ibmcloud oc vpcs --provider vpc-gen2 | grep $MY_PREFIX-$MY_VPC | awk '{print $2}' > my_vpc_id
 fi
 
-echo "-------Create a new Subnet"
+echo "-------Create a new Subnet if not exist"
 ibmcloud is subnets | grep $MY_PREFIX-$MY_SUBNET
 if [ `echo $?` -eq 1 ]
 then
@@ -28,7 +28,7 @@ then
   ibmcloud is subnets | grep $MY_PREFIX-$MY_SUBNET | awk '{print $1}' > my_subnet_id
 fi
 
-echo "-------Create a new Public Gateway and associate to the Subnet"
+echo "-------Create a new Public Gateway and associate to the Subnet if not exist"
 ibmcloud is public-gateways | grep $MY_PREFIX-$MY_GATEWAY
 if [ `echo $?` -eq 1 ]
 then
@@ -36,7 +36,7 @@ then
   ibmcloud is subnet-update $MY_PREFIX-$MY_SUBNET --pgw $(ibmcloud is public-gateways | grep $MY_PREFIX-$MY_GATEWAY | awk '{print $1}')
 fi
 
-echo "-------Create a Cloud Object Storage instance"
+echo "-------Create a Cloud Object Storage instance if not exist"
 ibmcloud resource service-instances | grep $MY_PREFIX-$MY_OBJECT_STORAGE
 if [ `echo $?` -eq 1 ]
 then
@@ -44,21 +44,28 @@ then
 fi
   ibmcloud resource service-instance $MY_PREFIX-$MY_OBJECT_STORAGE --output json | jq '.[].id' | sed -e 's/\"//g' | head -1 > my_cos_instance_id
 
-echo "-------Create an Cloud Object Storage Service Key"
+echo "-------Create an Cloud Object Storage Service Key if not exist"
 ibmcloud resource service-keys | grep $MY_PREFIX-$MY_SERVICE_KEY
 if [ `echo $?` -eq 1 ]
 then
   ibmcloud resource service-key-create $MY_PREFIX-$MY_SERVICE_KEY --instance-name $MY_PREFIX-$MY_OBJECT_STORAGE --parameters '{"HMAC":true}'
+fi
+
+if [ ! -f ibmaccess ]; then
   ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[].credentials.cos_hmac_keys.access_key_id' > ibmaccess
   ibmcloud resource service-key $MY_PREFIX-$MY_SERVICE_KEY --output JSON | jq '.[].credentials.cos_hmac_keys.secret_access_key' >> ibmaccess
 fi
 
-echo "-------Create an Object Storage Bucket"
+echo "-------Create an Object Storage Bucket if not exist"
 ibmcloud cos buckets --ibm-service-instance-id $(cat my_cos_instance_id) | grep $MY_BUCKET
 if [ `echo $?` -eq 1 ]
 then
   echo $MY_PREFIX-$MY_BUCKET-$(date +%s) > my_ibm_bucket
   ibmcloud cos bucket-create --bucket $(cat my_ibm_bucket) --ibm-service-instance-id $(cat my_cos_instance_id) --class standard --region $MY_REGION
+fi
+
+if [ ! -f ibmbucket ]; then
+ibmcloud cos buckets --ibm-service-instance-id $(cat my_cos_instance_id) | grep $MY_BUCKET | awk '{print $1}' > ibmbucket  
 fi
 
 echo "-------Upgrade Helm to version 3"
