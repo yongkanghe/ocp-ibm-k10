@@ -22,7 +22,7 @@ sleep 300
 echo '-------Still waiting for removing the cluster'
 sleep 300
 
-echo '-------Almost completed to delete the cluster'
+echo '-------Almost complete to delete the cluster'
 sleep 300
 
 echo "-------Clean up the resources Subnet, Gateway, Service Key, Storage Instance and Resource Group"
