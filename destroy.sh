@@ -16,6 +16,15 @@ ibmcloud cos objects --bucket $(cat my_ibm_bucket) --region $MY_REGION --output 
 for i in `cat k10objects`;do echo $i;ibmcloud cos object-delete --bucket $(cat my_ibm_bucket) --key $i --region $MY_REGION --force;done 
 ibmcloud cos bucket-delete --bucket $(cat my_ibm_bucket) --region $MY_REGION --force
 
+echo '-------Waiting for removing the cluster'
+sleep 300
+
+echo '-------Still waiting for removing the cluster'
+sleep 300
+
+echo '-------Almost completed to delete the cluster'
+sleep 300
+
 echo "-------Clean up the resources Subnet, Gateway, Service Key, Storage Instance and Resource Group"
 ibmcloud is subnet-delete $MY_PREFIX-$MY_SUBNET -f
 ibmcloud is public-gateway-delete $MY_PREFIX-$MY_GATEWAY -f
