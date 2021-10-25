@@ -2,10 +2,10 @@ starttime=$(date +%s)
 . setenv.sh
 MY_PREFIX=$(echo $(whoami) | sed -e 's/\_//g' | sed -e 's/\.//g' | awk '{print tolower($0)}')
 
-echo "-------Delete postgresql & kasten-io"
-./helm uninstall postgres -n postgresql
+echo "-------Delete mongodb & kasten-io"
+./helm uninstall postgres -n mongodb
 ./helm uninstall k10 -n kasten-io
-kubectl delete ns postgresql
+kubectl delete ns mongodb
 kubectl delete ns kasten-io
 
 # echo '-------Deleting the bucket'
