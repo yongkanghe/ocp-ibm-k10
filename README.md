@@ -41,7 +41,7 @@ vim setenv.sh
 3. Remove all the relevant snapshots
 4. Remove the objects from the bucket
 
-# Cick my picture to watch the how-to video. (TO BE RECORDED)
+# Cick my picture to watch the how-to video.
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/HohBSwDjtmM/0.jpg)](https://www.youtube.com/watch?v=HohBSwDjtmM)
 
 # Learn how to build an OCP cluster via Web Console http://createocp.yongkang.cloud 
