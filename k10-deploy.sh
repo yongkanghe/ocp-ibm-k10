@@ -161,7 +161,7 @@ cat ocp-token
 
 endtime=$(date +%s)
 duration=$(( $endtime - $starttime ))
-echo "-------Total time is ONLY $(($duration / 60)) minutes $(($duration % 60)) seconds for Kasten K10+Postgresql+Policy+OnDemandBackup."
+echo "-------Total time is ONLY $(($duration / 60)) minutes $(($duration % 60)) seconds for Kasten K10+MongoDB+Policy+OnDemandBackup."
 echo "" | awk '{print $1}'
 echo "-------Created by Yongkang"
 echo "-------Email me if any suggestions or issues he@yongkang.cloud"
