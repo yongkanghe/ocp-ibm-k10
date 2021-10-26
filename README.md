@@ -41,11 +41,14 @@ vim setenv.sh
 3. Remove all the relevant snapshots
 4. Remove the objects from the bucket
 
-# Cick my picture to watch the how-to video.
+# Learn how to automate OCP, OCS, MongoDB and K10.
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/HohBSwDjtmM/0.jpg)](https://www.youtube.com/watch?v=HohBSwDjtmM)
 
 # Learn how to build an OCP cluster via Web Console
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/FDvY9PSxgAQ/0.jpg)](https://www.youtube.com/watch?v=FDvY9PSxgAQ)
+
+# Learn how to backup/restore containers on OCP Cluster
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/zMKIOCuEPyI/0.jpg)](https://www.youtube.com/watch?v=zMKIOCuEPyI)
 
 # For more details about OCP Backup and Restore
 https://blog.kasten.io/kubernetes-backup-with-openshift-container-storage
