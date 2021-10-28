@@ -37,9 +37,10 @@ vim setenv.sh
 ./destroy.sh
 ````
 1. Remove OpenShift Cluster Cluster
-2. Remove all the relevant disks
-3. Remove all the relevant snapshots
-4. Remove the objects from the bucket
+2. Remove the VPC, Subnet, Gateway
+3. Remove all the relevant disks
+4. Remove all the relevant snapshots
+5. Remove the objects from the bucket
 
 # Learn how to automate OCP, OCS, MongoDB and K10.
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/HohBSwDjtmM/0.jpg)](https://www.youtube.com/watch?v=HohBSwDjtmM)
