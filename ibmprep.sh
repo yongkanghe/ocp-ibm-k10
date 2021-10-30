@@ -82,6 +82,21 @@ if [ ! -f helm ]; then
   rm -rf linux-amd64 
 fi
 
+echo "-------Output the ocp-token if not exist"
+oc get route -n kasten-io | grep k10
+if [ `echo $?` -eq 0 ];then
+    if [ ! -f ocp-token ];then
+      k10ui=http://$(kubectl get route -n kasten-io | grep k10-route | awk '{print $2}')/k10/#
+      echo -e "\nCopy below token before clicking the link to log into K10 Web UI -->> $k10ui" > ocp-token
+      echo "" | awk '{print $1}' >> ocp-token
+      sa_secret=$(kubectl get serviceaccount k10-k10 -o jsonpath="{.secrets[0].name}" --namespace kasten-io)
+      echo "Here is the token to login K10 Web UI" >> ocp-token
+      echo "" | awk '{print $1}' >> ocp-token
+      kubectl get secret $sa_secret --namespace kasten-io -ojsonpath="{.data.token}{'\n'}" | base64 --decode | awk '{print $1}' >> ocp-token
+      echo "" | awk '{print $1}' >> ocp-token
+    fi
+fi
+
 export PATH=~/ocp-ibm-k10:$PATH
 
 echo "" | awk '{print $1}'
