@@ -4,6 +4,13 @@ starttime=$(date +%s)
 MY_PREFIX=$(echo $(whoami) | sed -e 's/\_//g' | sed -e 's/\.//g' | awk '{print tolower($0)}')
 ibmcloud target -r $MY_REGION
 
+ibmcloud oc clusters | grep $MY_CLUSTER
+if [ `echo $?` -eq 0 ]
+then
+  echo '-------Retrieving OpenShift Cluster kubeconfig'
+  ibmcloud oc cluster config -c $MY_PREFIX-$MY_CLUSTER --admin
+fi
+
 ibmcloud resource groups | grep $MY_PREFIX-$MY_RESOURCE_GROUP
 if [ `echo $?` -eq 1 ]
 then
