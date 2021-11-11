@@ -31,6 +31,12 @@ if [ ! -f my_vpc_id ]; then
   ibmcloud oc vpcs --provider vpc-gen2 | grep $MY_PREFIX-$MY_VPC | awk '{print $2}' > my_vpc_id
 fi
 
+[ -s my_vpc_id ]
+if [ `echo $?` -eq 1 ]
+then
+    ibmcloud oc vpcs --provider vpc-gen2 | grep $MY_PREFIX-$MY_VPC | awk '{print $2}' > my_vpc_id
+fi
+
 echo "-------Create a new Subnet if not exist"
 ibmcloud is subnets | grep $MY_PREFIX-$MY_SUBNET
 if [ `echo $?` -eq 1 ]
