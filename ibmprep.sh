@@ -46,6 +46,7 @@ ibmcloud is subnets | grep $MY_PREFIX-$MY_SUBNET | awk '{print $1}' > my_subnet_
 fi
 
 echo "-------Create a new Public Gateway and associate to the Subnet if not exist"
+sleep 2
 ibmcloud is public-gateways | grep $MY_PREFIX-$MY_GATEWAY
 if [ `echo $?` -eq 1 ]
 then
