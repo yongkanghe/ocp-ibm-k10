@@ -68,7 +68,7 @@ then
 fi
   ibmcloud resource service-instance $MY_PREFIX-$MY_OBJECT_STORAGE --output json | jq '.[].id' | sed -e 's/\"//g' | head -1 > my_cos_instance_id
 
-echo "-------Create an Cloud Object Storage Service Key if not exist"
+echo "-------Create a Cloud Object Storage Service Key if not exist"
 ibmcloud resource service-keys | grep $MY_PREFIX-$MY_SERVICE_KEY
 if [ `echo $?` -eq 1 ]
 then
