@@ -27,9 +27,9 @@ then
   ibmcloud oc vpcs --provider vpc-gen2 | grep $MY_PREFIX-$MY_VPC | awk '{print $2}' > my_vpc_id
 fi
 
-if [ ! -f my_vpc_id ]; then
-  ibmcloud oc vpcs --provider vpc-gen2 | grep $MY_PREFIX-$MY_VPC | awk '{print $2}' > my_vpc_id
-fi
+# if [ ! -f my_vpc_id ]; then
+#   ibmcloud oc vpcs --provider vpc-gen2 | grep $MY_PREFIX-$MY_VPC | awk '{print $2}' > my_vpc_id
+# fi
 
 [ -s my_vpc_id ]
 if [ `echo $?` -eq 1 ]
