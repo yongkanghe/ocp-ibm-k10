@@ -29,9 +29,9 @@ echo '-------Annotate the volumesnapshotclass'
 oc annotate volumesnapshotclass ocs-storagecluster-rbdplugin-snapclass k10.kasten.io/is-snapshot-class=true
 
 echo '-------Deploying a MongoDB database'
-kubectl create namespace mongodb
+kubectl create namespace k10-mongodb
 ./helm repo add bitnami https://charts.bitnami.com/bitnami
-./helm install mongodb bitnami/mongodb -n mongodb \
+./helm install mongodb bitnami/mongodb -n k10-mongodb \
   --set persistence.storageClass=ocs-storagecluster-ceph-rbd \
   --set persistence.size=1Gi \
   --set volumePermissions.securityContext.runAsUser="auto" \
@@ -96,7 +96,7 @@ cat <<EOF | kubectl apply -f -
 apiVersion: config.kio.kasten.io/v1alpha1
 kind: Policy
 metadata:
-  name: mongodb-backup
+  name: k10-mongodb-backup
   namespace: kasten-io
 spec:
   comment: ""
@@ -136,7 +136,7 @@ spec:
       - key: k10.kasten.io/appNamespace
         operator: In
         values:
-          - mongodb
+          - k10-mongodb
 EOF
 
 sleep 7
@@ -152,7 +152,7 @@ metadata:
 spec:
   subject:
     kind: Policy
-    name: mongodb-backup
+    name: k10-mongodb-backup
     namespace: kasten-io
 EOF
 
