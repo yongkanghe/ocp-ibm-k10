@@ -3,9 +3,9 @@ starttime=$(date +%s)
 MY_PREFIX=$(echo $(whoami) | sed -e 's/\_//g' | sed -e 's/\.//g' | awk '{print tolower($0)}')
 
 echo "-------Delete mongodb & kasten-io"
-./helm uninstall mongodb -n mongodb
+./helm uninstall mongodb -n k10-mongodb
 ./helm uninstall k10 -n kasten-io
-kubectl delete ns mongodb
+kubectl delete ns k10-mongodb
 kubectl delete ns kasten-io
 
 # echo '-------Deleting the bucket'
