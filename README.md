@@ -32,7 +32,9 @@ vim setenv.sh
 5. Create a backup policy
 6. Run an on-demand backup job
 
-## NOTE: IBM Cloud Shell is emphemeral. The cloned respository including the temporary files will be removed after no activity for one hour. If that happened, you need to run below steps to re-created the files before you run the destroy.sh. 
+## NOTE: IBM Cloud Shell is emphemeral. 
+
+The cloned respository including the temporary files will be removed after no activity for one hour. If that happened, you need to run below steps to re-created the files before you can destroy the labs. 
 
 ## To create the repository and the temporary files
 ````
