@@ -32,6 +32,13 @@ vim setenv.sh
 5. Create a backup policy
 6. Run an on-demand backup job
 
+## NOTE: IBM Cloud Shell is emphemeral. The cloned respository including the temporary files will be removed after no activity for one hour. If that happened, you need to run below steps to re-created the files before you run the destroy.sh. 
+
+## To create the repository and the temporary files
+````
+git clone https://github.com/yongkanghe/ocp-ibm-k10.git;cd ocp-ibm-k10;./ibmprep.sh
+````
+
 # To delete the labs, run 
 ````
 ./destroy.sh
