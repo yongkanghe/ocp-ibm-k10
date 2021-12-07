@@ -17,6 +17,8 @@ kubectl create ns kasten-io
     --set global.persistence.catalog.size=1Gi \
     --set global.persistence.jobs.size=1Gi \
     --set global.persistence.logging.size=1Gi \
+    --set global.persistence.grafana.size=1Gi \
+    --set metering.mode=airgap \
     --set scc.create=true \
     --set route.enabled=true \
     --set auth.tokenAuth.enabled=true \
@@ -38,6 +40,13 @@ kubectl create namespace k10-mongodb
   --set podSecurityContext.fsGroup="auto" \
   --set podSecurityContext.enabled=false \
   --set containerSecurityContext.enabled=false 
+
+# kubectl create namespace k10-postgresql
+# helm repo add bitnami https://charts.bitnami.com/bitnami
+# helm install --namespace k10-postgresql postgres bitnami/postgresql \
+#   --set persistence.size=1Gi \
+#   --set persistence.storageClass=ocs-storagecluster-ceph-rbd \
+#   --set volumePermissions.securityContext.runAsUser="auto",securityContext.enabled=false,containerSecurityContext.enabled=false,shmVolume.chmod.enabled=false
 
 echo '-------Output the Cluster ID'
 clusterid=$(kubectl get namespace default -ojsonpath="{.metadata.uid}{'\n'}")
