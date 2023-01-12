@@ -1,0 +1,13 @@
+apiVersion: snapshot.storage.k8s.io/v1
+deletionPolicy: Retain
+driver: openshift-storage.rbd.csi.ceph.com
+kind: VolumeSnapshotClass
+metadata:
+  labels:
+    cloudcasa.io/csi-volumesnapshot-class: "true"
+    component: kubeagent-backup-helper
+  name: cloudcasa-openshift-storage-rbd-csi-ceph-com
+parameters:
+  clusterID: openshift-storage
+  csi.storage.k8s.io/snapshotter-secret-name: rook-csi-rbd-provisioner
+  csi.storage.k8s.io/snapshotter-secret-namespace: openshift-storage
