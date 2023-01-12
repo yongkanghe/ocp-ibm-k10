@@ -43,6 +43,12 @@ sleep 360
 echo '-------Still waiting for OCS services up running'
 sleep 360
 
+echo '-------Set default storageclass to ceph-rbd'
+sleep 60
+oc annotate sc ocs-storagecluster-ceph-rbd storageclass.kubernetes.io/is-default-class=true
+oc annotate sc ibmc-vpc-block-10iops-tier storageclass.kubernetes.io/is-default-class-
+oc apply -f ./cc-vsc.yaml
+
 echo '-------Now it is ready to deploy Apps into OCP Cluster'
 
 endtime=$(date +%s)
